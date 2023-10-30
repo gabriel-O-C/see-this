@@ -1,7 +1,8 @@
 export type Recommendation = {
   title: FormDataEntryValue;
-  type: RecommendationType
+  type: string
   completed: boolean;
+  id: string
 };
 
 export type RecommendationType = "movie" | "anime" | "book";

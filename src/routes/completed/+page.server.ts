@@ -1,4 +1,3 @@
-import { markAsNotCompleted } from "$lib/data";
 import RecomendationService from "../../services/RecomendationService.js";
 
 export async function load() {
@@ -13,9 +12,14 @@ export async function load() {
 export const actions = {
   markAsCompleted: async ({ request }) => {
     const data = await request.formData();
-    const title = data.get("recommendation");
-    if (title) {
-      markAsNotCompleted(title);
+    const id = data.get("id");
+    const completed = data.get("completed");
+
+    if (completed && id) {
+      await RecomendationService.updateRecomendation(
+        String(id),
+        Boolean(completed)
+      );
     }
   },
 };
