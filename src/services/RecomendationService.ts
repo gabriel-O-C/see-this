@@ -7,6 +7,7 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
+import RecomendationMapper from "./mappers/RecomendationMapper";
 
 class RecommendationService {
   async getRecomendations(): Promise<Recommendation[]> {
@@ -21,7 +22,7 @@ class RecommendationService {
         type: data.type,
       });
     });
-    return recomendations;
+    return recomendations.map(RecomendationMapper.toDomain);
   }
 
   async completeRecomendation(id: string): Promise<void> {
@@ -29,7 +30,6 @@ class RecommendationService {
       await updateDoc(doc(db, "recomendations", id), {
         completed: true,
       });
-
     } catch (error) {
       console.log("error", error);
     }
@@ -40,7 +40,6 @@ class RecommendationService {
       await updateDoc(doc(db, "recomendations", id), {
         completed: false,
       });
-
     } catch (error) {
       console.log("error", error);
     }
