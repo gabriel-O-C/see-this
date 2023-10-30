@@ -1,3 +1,5 @@
+import type { Recommendation } from "./types/Recomendation";
+
 export const recommendations = [
   {
     title: "jogador número 1",
@@ -35,25 +37,31 @@ export const recommendations = [
     completed: false,
   },
 ];
-type Recommendation = {
-  title: string;
-  type: string;
-  completed: boolean;
-}
+
 export function markAsCompleted(title: FormDataEntryValue) {
   recommendations.map((item) => {
-    if(item.title === title) {
-      item.completed = true
+    if (item.title === title) {
+      item.completed = true;
     }
-    return item
-  })
+    return item;
+  });
 }
 
 export function markAsNotCompleted(title: FormDataEntryValue) {
   recommendations.map((item) => {
-    if(item.title === title) {
-      item.completed = false
+    if (item.title === title) {
+      item.completed = false;
     }
-    return item
-  })
+    return item;
+  });
+}
+
+export function addNewSugestion({ completed, title, type }: Recommendation) {
+  if (completed && title && type) {
+    recommendations.push({ completed, title: String(title), type });
+
+    return true
+  }
+
+  return false
 }

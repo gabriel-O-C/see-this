@@ -1,10 +1,11 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
 
-  export let action: string
-  export let method: string
+  export let action: string = "";
+  export let method: string;
+  export let style: string = "";
 </script>
 
-<form action="{action}" method="{method}" use:enhance class="grid grid-cols-2 gap-4">
+<form {action} {method} use:enhance class="grid gap-4 {style}">
   <slot />
 </form>

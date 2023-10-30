@@ -5,7 +5,7 @@
   export let data
 </script>
 
-<main class="flex items-center justify-center flex-col gap-4">
+<main class="flex flex-col items-center justify-center gap-4">
   <h1 class="text-2xl font-bold">Everything that I wanna you to see/read.</h1>
   
   <ul>
@@ -14,9 +14,9 @@
     {/if}
     
     {#each data.recommendations as recommendation (recommendation.title)}
-      <Form action="?/markAsCompleted" method="post">
+      <Form method="post" style={"grid-cols-2"}>
         <input type="hidden" name="recommendation" value="{recommendation.title}" />
-        <li class="capitalize mb-2" out:fade>{recommendation.title} - {recommendation.type}</li>
+        <li class="mb-2 capitalize" out:fade>{recommendation.title} - {recommendation.type}</li>
         <Button title="completed" />
       </Form>
     {/each}
