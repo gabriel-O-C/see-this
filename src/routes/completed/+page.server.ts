@@ -10,16 +10,12 @@ export async function load() {
 }
 
 export const actions = {
-  markAsCompleted: async ({ request }) => {
+  default: async ({ request }) => {
     const data = await request.formData();
     const id = data.get("id");
-    const completed = data.get("completed");
 
-    if (completed && id) {
-      await RecomendationService.updateRecomendation(
-        String(id),
-        Boolean(completed)
-      );
+    if (id) {
+      await RecomendationService.doAgainRecomendation(String(id));
     }
   },
 };

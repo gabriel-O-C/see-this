@@ -1,6 +1,12 @@
 import { db } from "$lib/firebase";
 import type { Recommendation } from "$lib/types/Recomendation";
-import { addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 
 class RecommendationService {
   async getRecomendations(): Promise<Recommendation[]> {
@@ -18,19 +24,34 @@ class RecommendationService {
     return recomendations;
   }
 
-  async updateRecomendation(id: string, completed: boolean): Promise<void> {
-    await updateDoc(doc(db, "recomendations", id), {  
-      completed: !completed,
-    });
+  async completeRecomendation(id: string): Promise<void> {
+    try {
+      await updateDoc(doc(db, "recomendations", id), {
+        completed: true,
+      });
+
+    } catch (error) {
+      console.log("error", error);
+    }
   }
 
-  async createRecomendation({title, type}: Record<string, string>) {
+  async doAgainRecomendation(id: string): Promise<void> {
+    try {
+      await updateDoc(doc(db, "recomendations", id), {
+        completed: false,
+      });
+
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async createRecomendation({ title, type }: Record<string, string>) {
     await addDoc(collection(db, "recomendations"), {
       completed: false,
       title,
       type,
-    })
-
+    });
   }
 }
 

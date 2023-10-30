@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, Form } from "$lib";
-  import { fade } from "svelte/transition";
+  import { fade, slide } from "svelte/transition";
 
   export let data;
 </script>
@@ -17,13 +17,7 @@
       <Form method="post" style={"grid-cols-2"}>
         <input type="hidden" name="id" value={recommendation.id} />
 
-        <input
-          type="hidden"
-          name="completed"
-          value={recommendation.completed}
-        />
-
-        <li class="mb-2 capitalize" out:fade>
+        <li class="mb-2 capitalize" out:fade in:slide>
           {recommendation.title} - {recommendation.type}
         </li>
         <Button title="completed" />

@@ -12,14 +12,11 @@ export async function load() {
 export const actions = {
   default: async ({ request }) => {
     const data = await request.formData();
-
-    const completed = data.get("completed");
     const id = data.get("id");
 
-    if (completed && id) {
-      await RecomendationService.updateRecomendation(
+    if (id) {
+      await RecomendationService.completeRecomendation(
         String(id),
-        Boolean(completed)
       );
     }
   },

@@ -20,7 +20,5 @@ export const actions = {
       title: String(sugestion),
       type: String(sugestionType),
     });
-
-    return { success: true, type: "" };
   },
 };
