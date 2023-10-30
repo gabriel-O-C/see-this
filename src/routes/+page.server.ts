@@ -1,8 +1,12 @@
-import { recommendations as db, markAsCompleted } from "$lib/data";
+import { markAsCompleted } from "$lib/data";
+import RecomendationService from "../services/RecomendationService.js";
 
-export function load() {
+export async function load() {
+  const recomendations = await RecomendationService.getRecomendations();
   return {
-    recommendations: db.filter((recommendation) => !recommendation.completed),
+    recommendations: recomendations.filter(
+      (recommendation) => !recommendation.completed
+    ),
   };
 }
 
