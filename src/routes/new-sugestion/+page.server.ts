@@ -1,6 +1,5 @@
-import { addNewSugestion } from "$lib/data.js";
-import type { RecommendationType } from "$lib/types/Recomendation.js";
 import { fail } from "@sveltejs/kit";
+import RecomendationService from "../../services/RecomendationService.js";
 
 export const actions = {
   default: async ({ request }) => {
@@ -9,20 +8,19 @@ export const actions = {
     const sugestion = response.get("sugestion");
     const sugestionType = response.get("type");
 
-    if(!sugestion) {
-      return fail(400, {sugestionError: 'sugestion is required'})
+    if (!sugestion) {
+      return fail(400, { sugestionError: "sugestion is required" });
     }
 
     if (!sugestionType) {
       return fail(400, { sugestionTypeError: "sugestion type is required" });
     }
 
-    addNewSugestion({
+    await RecomendationService.createRecomendation({
       title: String(sugestion),
-      type: sugestionType as RecommendationType,
-      completed: false,
+      type: String(sugestionType),
     });
 
-    return { success: true, type: '' };
+    return { success: true, type: "" };
   },
 };
